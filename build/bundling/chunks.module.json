@@ -2,7 +2,7 @@
   "errors": [],
   "warnings": [],
   "version": "4.44.2",
-  "hash": "6283b1a32a4b2fa182d1",
+  "hash": "165045c59669ce6a0c27",
   "publicPath": "/static/",
   "outputPath": "/Users/brett.krueger/Documents/code/headless/headless-wpe/frontity-wpe-headless/build/static",
   "assetsByChunkName": {
@@ -20,8 +20,7 @@
         "frontitywp"
       ],
       "info": {},
-      "emitted": false,
-      "isOverSizeLimit": true
+      "emitted": false
     },
     {
       "name": "list.module.js",
