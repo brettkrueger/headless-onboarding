@@ -2,9 +2,7 @@ import Head from 'next/head'
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
-
-const name = 'Brett Krueger'
-export const siteTitle = 'Next.js Sample Website'
+import { name, siteTitle } from '../lib/constants'
 
 export default function Layout({ children, home }) {
   return (

@@ -2,19 +2,17 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData } from '../lib/posts'
 import Date from '../components/date'
+import { getAllPostsForHome } from '../lib/api'
+import { CMS_NAME } from '../lib/constants'
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData
-    }
-  }
-}
 
-export default function Home({ allPostsData }) {
+/*<Link as={`/posts/${node.slug}`} href="/posts/[id]">
+  <a>{node.title}</a>
+</Link>*/
+export default function Home({ allPosts: { edges }, preview }) {
+  const heroPost = edges[0]?.node
+  //const allPosts = edges[0]?.node
   return (
     <Layout home>
       <Head>
@@ -30,12 +28,12 @@ export default function Home({ allPostsData }) {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
+          {edges.map(({ id, node }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href={`/posts/${encodeURIComponent(id)}`}>{title}</Link>
+              <Link href={`/posts/${encodeURIComponent(node.slug)}`}>{node.title}</Link>
               <br />
               <small className={utilStyles.lightText}>
-                <Date dateString={date} />
+                <Date dateString={node.date} />
               </small>
             </li>
           ))}
@@ -43,4 +41,11 @@ export default function Home({ allPostsData }) {
       </section>
     </Layout>
   )
+}
+
+export async function getStaticProps({ preview = false }) {
+  const allPosts = await getAllPostsForHome(preview)
+  return {
+    props: { allPosts, preview },
+  }
 }
