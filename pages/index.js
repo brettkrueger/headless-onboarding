@@ -6,13 +6,7 @@ import Date from '../components/date'
 import { getAllPostsForHome } from '../lib/api'
 import { CMS_NAME } from '../lib/constants'
 
-
-/*<Link as={`/posts/${node.slug}`} href="/posts/[id]">
-  <a>{node.title}</a>
-</Link>*/
 export default function Home({ allPosts: { edges }, preview }) {
-  const heroPost = edges[0]?.node
-  //const allPosts = edges[0]?.node
   return (
     <Layout home>
       <Head>
@@ -30,7 +24,9 @@ export default function Home({ allPosts: { edges }, preview }) {
         <ul className={utilStyles.list}>
           {edges.map(({ id, node }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link href={`/posts/${encodeURIComponent(node.slug)}`}>{node.title}</Link>
+              <Link as={`/posts/${node.slug}`} href="/posts/[slug]">
+                <a>{node.title}</a>
+              </Link>
               <br />
               <small className={utilStyles.lightText}>
                 <Date dateString={node.date} />
