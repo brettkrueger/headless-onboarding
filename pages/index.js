@@ -6,6 +6,12 @@ import Date from '../components/date'
 import { getAllPostsForHome } from '../lib/api'
 import { CMS_NAME } from '../lib/constants'
 
+/*
+<Link as={`/posts/${node.slug}`} href="/posts/[slug]">
+  <a>{node.title}</a>
+</Link>
+*/
+
 export default function Home({ allPosts: { edges }, preview }) {
   return (
     <Layout home>
@@ -24,9 +30,7 @@ export default function Home({ allPosts: { edges }, preview }) {
         <ul className={utilStyles.list}>
           {edges.map(({ id, node }) => (
             <li className={utilStyles.listItem} key={id}>
-              <Link as={`/posts/${node.slug}`} href="/posts/[slug]">
-                <a>{node.title}</a>
-              </Link>
+              <Link href={`/posts/${node.slug}`}>{node.title}</Link>
               <br />
               <small className={utilStyles.lightText}>
                 <Date dateString={node.date} />
