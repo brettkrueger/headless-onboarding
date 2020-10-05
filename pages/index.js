@@ -30,7 +30,7 @@ export default function Home({ allPosts: { edges }, preview }) {
         <ul className={utilStyles.list}>
           {edges.map(({ id, node }) => (
             <li className={utilStyles.listItem} key={id}>
-              <a href={`/posts/${node.slug}`}>{node.title}</a>
+              <Link href={`/posts/${node.slug}`}>{node.title}</Link>
               <br />
               <small className={utilStyles.lightText}>
                 <Date dateString={node.date} />
