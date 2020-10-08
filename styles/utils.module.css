@@ -50,3 +50,9 @@
 .lightText {
   color: #999;
 }
+
+.rainbowText {
+  background-image: linear-gradient(to left, violet, indigo, blue, green, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

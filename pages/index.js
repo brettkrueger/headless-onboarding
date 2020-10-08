@@ -5,12 +5,40 @@ import utilStyles from '../styles/utils.module.css'
 import Date from '../components/date'
 import { getAllPostsForHome } from '../lib/api'
 import { CMS_NAME } from '../lib/constants'
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch, SearchBox, Hits, Pagination, connectHits } from 'react-instantsearch-dom';
+
+const searchClient = algoliasearch(
+  'S138U9P3XT',
+  '005db31874d7005b9b2d1e861c7c25cc'
+);
+
+//<Hits hitComponent={HitComponent} />
+const HitComponent = ({ hit }) => (
+  <div className="posts">
+        <Link href={`/posts/${hit.slug}`} className="posts"><a>{hit.title.rendered}</a></Link>
+        <br />
+        <small className={utilStyles.lightText}>
+          <Date dateString={hit.date} />
+        </small>
+  </div>
+);
 
 /*
-<Link as={`/posts/${node.slug}`} href="/posts/[slug]">
-  <a>{node.title}</a>
-</Link>
+<h2 className={utilStyles.headingLg}>Blog</h2>
+<ul className={utilStyles.list}>
+  {edges.map(({ id, node }) => (
+    <li className={utilStyles.listItem} key={id}>
+      <Link href={`/posts/${node.slug}`}>{node.title}</Link>
+      <br />
+      <small className={utilStyles.lightText}>
+        <Date dateString={node.date} />
+      </small>
+    </li>
+  ))}
+</ul>
 */
+//const CustomHits = connectHits(HitComponent);
 
 export default function Home({ allPosts: { edges }, preview }) {
   return (
@@ -19,25 +47,25 @@ export default function Home({ allPosts: { edges }, preview }) {
         <title>Brett Krueger's Next.js site</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p>I'm <strong>Brett</strong> and I work on WordPress and headless stuffs!</p>
+        <p>I'm <strong className={utilStyles.rainbowText}>Brett</strong> and I work on WordPress and headless stuffs!</p>
         <p>
           Check out more stuff on {' '}
           <a href="https://github.com/brettkrueger/headless-onboarding" target="_blank">Github</a>.
         </p>
+        <p>
+        Now with <span className={utilStyles.rainbowText}>Algolia</span> and <strong>prerendering</strong>!
+        </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
-        <ul className={utilStyles.list}>
-          {edges.map(({ id, node }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <Link href={`/posts/${node.slug}`}>{node.title}</Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                <Date dateString={node.date} />
-              </small>
-            </li>
-          ))}
-        </ul>
+      <h2 className={utilStyles.headingLg}>Blog</h2>
+      <InstantSearch
+        indexName="headless_NEXTJS"
+        searchClient={searchClient}>
+        <div>
+          <SearchBox />
+          <Hits hitComponent={HitComponent} />
+        </div>
+      </InstantSearch>
       </section>
     </Layout>
   )

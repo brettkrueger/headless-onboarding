@@ -40,9 +40,7 @@ export async function getStaticProps({ params }) {
   }
 }
 
-
 export async function getStaticPaths() {
-  //const paths = await getAllPostIds()
   const allPosts = await getAllPostsWithSlug()
   return {
     paths: allPosts.edges.map(({ node }) => `/posts/${node.slug}`) || [],
