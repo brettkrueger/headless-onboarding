@@ -4,13 +4,13 @@ import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import Date from '../components/date'
 import { getAllPostsForHome } from '../lib/api'
-import { CMS_NAME } from '../lib/constants'
+import { CMS_NAME, ALGOLIA_UID, ALGOLIA_SECRET } from '../lib/constants'
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits, Pagination, connectHits } from 'react-instantsearch-dom';
 
 const searchClient = algoliasearch(
-  'S138U9P3XT',
-  '005db31874d7005b9b2d1e861c7c25cc'
+  ALGOLIA_UID,
+  ALGOLIA_SECRET
 );
 
 //<Hits hitComponent={HitComponent} />
